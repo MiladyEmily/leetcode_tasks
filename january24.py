@@ -79,3 +79,25 @@ class Solution2385(object):
         max_left = self.afterStartCounter(root.left)
         max_right = self.afterStartCounter(root.right)
         return max(max_left, max_right) + 1
+
+
+# 1026. Maximum Difference Between Node and Ancestor
+class Solution1026(object):
+    def maxAncestorDiff(self, root):
+        diff, max_, min_ = self.findMaxDiff(root)
+        return diff
+    
+    def findMaxDiff(self, root):
+        if not root:
+            return 0, 0, None
+        current_ancestor = root.val
+        current_min = current_ancestor
+        left_diff, left_max, left_min = self.findMaxDiff(root.left)
+        right_diff, right_max, right_min = self.findMaxDiff(root.right)
+        current_max = max(current_ancestor, left_max, right_max)
+        if left_min is not None and left_min < current_min:
+            current_min = left_min
+        if right_min is not None and right_min < current_min:
+            current_min = right_min
+        max_diff = max(left_diff, right_diff, current_ancestor - current_min, current_max - current_ancestor)
+        return max_diff, current_max, current_min 
