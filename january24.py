@@ -101,3 +101,20 @@ class Solution1026(object):
             current_min = right_min
         max_diff = max(left_diff, right_diff, current_ancestor - current_min, current_max - current_ancestor)
         return max_diff, current_max, current_min 
+
+
+# 455. Assign Cookies
+class Solution455(object):
+    def findContentChildren(self, g, s):
+        g.sort()
+        s.sort()
+        s_i = 0
+        g_i = 0
+        s_len = len(s)
+        g_len  = len(g)
+        while s_i < s_len and g_i < g_len:
+            if s[s_i] >= g[g_i]:
+                g_i += 1
+            s_i += 1
+        return g_i
+        
