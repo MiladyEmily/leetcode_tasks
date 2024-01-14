@@ -117,4 +117,30 @@ class Solution455(object):
                 g_i += 1
             s_i += 1
         return g_i
+
+
+#1657. Determine if Two Strings Are Close
+class Solution1657(object):
+    def closeStrings(self, word1, word2):
+        freq1 = [0]*26
+        freq2 = [0]*26
+        for char in word1:
+            freq1[ord(char)-ord('a')] += 1
+        for char in word2:
+            freq2[ord(char)-ord('a')] += 1
+        i = 0
+        while i < 26:
+            if (freq1[i] == 0) != (freq2[i] == 0):
+                return False
+            i += 1
+        freq1.sort()
+        freq2.sort()
+        i = -1
+        while i > -27:
+            if freq1[i] != freq2[i]:
+                return False
+            if not freq1[i]:
+                break
+            i -= 1
+        return True
         
