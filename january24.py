@@ -119,6 +119,28 @@ class Solution455(object):
         return g_i
 
 
+#1704. Determine if String Halves Are Alike
+class Solution1704(object):
+    def halvesAreAlike(self, s):
+        s = s.lower()
+        s_len = len(s)
+        half = s_len / 2
+        i = 0
+        VOWELS = ['a', 'e', 'i', 'o', 'u']
+        first_half = 0
+        while i < half:
+            if s[i] in VOWELS:
+                first_half += 1
+            i += 1
+        while i < s_len:
+            if s[i] in VOWELS:
+                first_half -= 1
+                if first_half < 0:
+                    return False
+            i += 1
+        return not first_half
+
+
 #1657. Determine if Two Strings Are Close
 class Solution1657(object):
     def closeStrings(self, word1, word2):
