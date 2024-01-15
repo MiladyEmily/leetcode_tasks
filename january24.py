@@ -165,4 +165,29 @@ class Solution1657(object):
                 break
             i -= 1
         return True
-        
+
+
+# 2225. Find Players With Zero or One Losses
+class Solution2225(object):
+    def findWinners(self, matches):
+        lose = {}
+        for match in matches:
+            loser = match[1]
+            if match[0] not in lose:
+                lose[match[0]] = 0
+            if loser not in lose:
+                lose[loser] = 1
+            elif lose[loser] < 2: 
+                lose[loser] += 1
+        no_lose = []
+        one_lose = []
+        for part, loses in lose.items():
+            if not loses:
+                no_lose.append(part)
+                continue
+            if loses == 1:
+                one_lose.append(part)
+        no_lose.sort()
+        one_lose.sort()
+        return [no_lose, one_lose]
+
