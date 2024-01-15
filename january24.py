@@ -191,3 +191,19 @@ class Solution2225(object):
         one_lose.sort()
         return [no_lose, one_lose]
 
+# 1347. Minimum Number of Steps to Make Two Strings Anagram
+class Solution1347(object):
+    def minSteps(self, s, t):
+        s_count = [0]*26
+        t_count = [0]*26
+        for char in s:
+            s_count[ord(char)-ord('a')] += 1
+        for char in t:
+            t_count[ord(char)-ord('a')] += 1
+        steps = 0
+        i = 0
+        while i < 26:
+            if s_count[i] > t_count[i]:
+                steps += s_count[i] - t_count[i]
+            i += 1
+        return steps
