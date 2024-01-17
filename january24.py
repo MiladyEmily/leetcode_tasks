@@ -242,3 +242,26 @@ class Solution1347(object):
                 steps += s_count[i] - t_count[i]
             i += 1
         return steps
+
+
+#1207. Unique Number of Occurrences
+class Solution1207(object):
+    def uniqueOccurrences(self, arr):
+        arr.sort()
+        occurrences = []
+        current = arr[0]
+        count = 1
+        i = 1
+        arr_len = len(arr)
+        while i < arr_len:
+            if arr[i] == current:
+                count += 1
+                i += 1
+                continue
+            if count in occurrences:
+                return False
+            occurrences.append(count)
+            count = 1
+            current = arr[i]
+            i += 1
+        return count not in occurrences
