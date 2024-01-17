@@ -1,3 +1,38 @@
+import random
+
+
+#380. Insert Delete GetRandom O(1)
+class RandomizedSet380(object):
+
+    def __init__(self):
+        self.obj_set = []
+        self.index_list = {}
+    
+    def search(self, val):
+        return val in self.obj_set
+
+    def insert(self, val):
+        if self.search(val):
+            return False
+        self.obj_set.append(val)
+        self.index_list[val] = len(self.obj_set) - 1
+        return True
+
+    def remove(self, val):
+        if not self.search(val):
+            return False
+        del_index = self.index_list[val]
+        last_val = self.obj_set[-1]
+        self.obj_set[del_index] = last_val
+        self.index_list[last_val] = del_index
+        self.obj_set.pop()
+        del self.index_list[val]
+        return True
+
+    def getRandom(self):
+        return random.choice(self.obj_set)
+
+
 #872. Leaf-Similar Trees
 class Solution872(object):
     def leafSimilar(self, root1, root2):
