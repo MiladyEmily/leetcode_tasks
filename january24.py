@@ -286,3 +286,21 @@ class Solution70(object):
     
     def get_combinations(self, n, k):
         return self.get_factorial(n+k, n) / self.get_factorial(k)
+
+
+#2610. Convert an Array Into a 2D Array With Conditions
+class Solution2610(object):
+    def findMatrix(self, nums):
+        result_array = []
+        current_rows = 0
+        for char in nums:
+            i = 0
+            while i < current_rows:
+                if char not in result_array[i]:
+                    result_array[i].append(char)
+                    break
+                i += 1
+            if i == current_rows:
+                result_array.append([char])
+                current_rows += 1
+        return result_array
