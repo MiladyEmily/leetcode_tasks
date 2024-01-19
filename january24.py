@@ -265,3 +265,24 @@ class Solution1207(object):
             current = arr[i]
             i += 1
         return count not in occurrences
+
+
+#70. Climbing Stairs
+class Solution70(object):
+    def climbStairs(self, n):
+        current_1 = n % 2
+        current_2 = n // 2
+        ways_counter = 0
+        while current_1 < n:
+            ways_counter += self.get_combinations(current_1, current_2)
+            current_1 += 2
+            current_2 -= 1
+        return ways_counter + 1 #добавляет 1 для случая только из 1
+
+    def get_factorial(self, n, end = 1):
+        if n <= end + 1:  # обрабатывает вариант с 0 и 1
+            return n
+        return n*self.get_factorial(n-1, end)
+    
+    def get_combinations(self, n, k):
+        return self.get_factorial(n+k, n) / self.get_factorial(k)
