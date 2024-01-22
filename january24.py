@@ -304,3 +304,25 @@ class Solution2610(object):
                 result_array.append([char])
                 current_rows += 1
         return result_array
+
+#645. Set Mismatch
+class Solution645(object):
+    def findErrorNums(self, nums):
+        nums.sort()
+        i = 1
+        doubled = 0
+        missed = 0
+        for num in nums:
+            if i == num:
+                i += 1
+                continue
+            if i > num:
+                doubled = num
+                if missed:
+                    return [doubled, missed]
+                continue
+            missed = i
+            i = num + 1
+            if doubled:
+                return [doubled, missed]
+        return [doubled, i]
