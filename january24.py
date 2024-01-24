@@ -326,3 +326,32 @@ class Solution645(object):
             if doubled:
                 return [doubled, missed]
         return [doubled, i]
+    
+#1457. Pseudo-Palindromic Paths in a Binary Tree
+class Solution1457(object):
+    def pseudoPalindromicPaths (self, root):
+        basic_arr = [0]*9
+        if not root:
+            return 0
+        return self.findPath(root, basic_arr)
+    
+    def findPath(self, root, basic_arr):
+        if not root:
+            return 0
+        basic_arr[root.val-1] += 1
+        if not root.left and not root.right:
+            count = int(self.ispseudoPalindromic(basic_arr))
+        else:
+            count = self.findPath(root.left, basic_arr) + self.findPath(root.right, basic_arr)
+        basic_arr[root.val-1] -= 1
+        return count
+
+    def ispseudoPalindromic(self, counter):
+        unique = 1
+        for char in counter:
+            if not char % 2:
+                continue
+            if not unique:
+                return False
+            unique -= 1
+        return True
