@@ -355,3 +355,107 @@ class Solution1457(object):
                 return False
             unique -= 1
         return True
+
+#1239. Maximum Length of a Concatenated String with Unique Characters
+class Solution1239(object):
+    def maxLength(self, arr):
+        len_arr = len(arr)
+        next_str = [0]*len_arr
+        i = len_arr - 1
+        self.find_not_unique(arr, next_str)
+        while i >= 0:
+            if next_str[i]:
+                i -= 1
+                continue
+            next_str[i] = []
+            j = i - 1
+            j=0
+            while j < i:
+                if next_str[j]:
+                    j += 1
+                    continue
+                common = 1
+                for char in arr[j]:
+                    if char in arr[i]:
+                        common = 0
+                        break
+                if common:
+                    next_str[i].append(j)
+                j += 1
+            i -= 1
+        max_length = 0
+        i = len_arr-1
+        while i >= 0:
+            if next_str[i] == 1:
+                i -= 1
+                continue
+            current_len = len(arr[i])
+            variants = next_str[i]
+            if not variants:
+                if current_len > max_length:
+                    max_length = current_len
+                i -= 1
+                continue
+            # для непустого списка вариантов продолжений
+            max_tail = 0
+            continue_len = len(variants)
+            j = continue_len - 1
+            while j >= 0:
+                current = variants[j]
+                current_common = []
+                self.find_common(variants, next_str[current], current_common)
+                tail_length = len(arr[current])
+                tail_length += self.find_chains(arr, next_str, current_common)
+                if tail_length > max_tail:
+                    max_tail = tail_length
+                j -= 1
+            max_length = max(max_length, max_tail + current_len)
+            i -= 1
+        return max_length
+    
+    def find_chains(self, arr, next_str, current_common):
+        if not current_common:
+            return 0
+        current = current_common.pop()
+        if not current_common:
+            return len(arr[current])
+        # это если оставляем ячейку
+        curr_common_1 = []
+        self.find_common(current_common, next_str[current], curr_common_1)
+        # если убрали ячейку
+        len_var_2 = self.find_chains(arr, next_str, current_common)
+        len_var_1 = self.find_chains(arr, next_str, curr_common_1)
+        #считалка длины по номерам суммируемых элементов
+        return max(len(arr[current]) + len_var_1, len_var_2)
+
+    def find_common(self, arr1, arr2, common_arr):
+        i = 0
+        j = 0
+        len_1 = len(arr1)
+        len_2 = len(arr2)
+        while i < len_1 and j < len_2:
+            if arr1[i] == arr2[j]:
+                common_arr.append(arr1[i])
+                i += 1
+                j += 1
+                continue
+            if arr1[i] > arr2[j]:
+                j += 1
+                continue
+            i += 1
+
+    def only_unique_letters(self, str_):
+        unique = []
+        for char in str_:
+            if char in unique:
+                return False
+            unique.append(char)
+        return True
+
+    def find_not_unique(self, arr, next_str):
+        i = 0
+        len_arr = len(arr)
+        while i < len_arr:
+            if not arr[i] or not self.only_unique_letters(arr[i]):
+                next_str[i] = 1
+            i += 1
