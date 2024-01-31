@@ -512,3 +512,19 @@ class Solution150(object):
         if sign:
             return 1
         return -1
+
+
+#739. Daily Temperatures
+class Solution739:
+    def dailyTemperatures(self, temperatures):
+        stack = []
+        i = len(temperatures)
+        days_to_warm = [0]*i
+        while i > 0:
+            i -= 1
+            while stack and temperatures[stack[-1]] <= temperatures[i]:
+                stack.pop()
+            if stack:
+                days_to_warm[i] = stack[-1] - i
+            stack.append(i)
+        return days_to_warm
