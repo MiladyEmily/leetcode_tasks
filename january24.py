@@ -459,3 +459,31 @@ class Solution1239(object):
             if not arr[i] or not self.only_unique_letters(arr[i]):
                 next_str[i] = 1
             i += 1
+
+
+#232. Implement Queue using Stacks
+MAX_SIZE = 100
+class MyQueue(object):
+    def __init__(self):
+        self.head = 0 # где первый элемент в очереди
+        self.tail = 0 # куда вставлять следующий
+        self.size = 0
+        self.array = [None]*MAX_SIZE
+
+    def push(self, x):
+        self.array[self.tail] = x
+        self.tail = (self.tail + 1) % MAX_SIZE
+        self.size += 1    
+
+    def pop(self):
+        current = self.peek()
+        self.array[self.head] = None
+        self.head = (self.head + 1) % MAX_SIZE
+        self.size -= 1
+        return current
+
+    def peek(self):
+        return self.array[self.head]
+
+    def empty(self):
+        return self.size == 0
