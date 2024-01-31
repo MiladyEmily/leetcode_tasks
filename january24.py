@@ -463,7 +463,7 @@ class Solution1239(object):
 
 #232. Implement Queue using Stacks
 MAX_SIZE = 100
-class MyQueue(object):
+class MyQueue232(object):
     def __init__(self):
         self.head = 0 # где первый элемент в очереди
         self.tail = 0 # куда вставлять следующий
@@ -487,3 +487,28 @@ class MyQueue(object):
 
     def empty(self):
         return self.size == 0
+
+
+#150. Evaluate Reverse Polish Notation
+class Solution150(object):
+    def evalRPN(self, tokens):
+        calcul_func = {
+            '+': lambda x, y: x + y,
+            '-': lambda x, y: x - y,
+            '*': lambda x, y: x * y,
+            '/': lambda x, y: abs(x) // abs(y) * self.get_sign(x, y),
+        }
+        previous = []
+        for char in tokens:
+            if char not in calcul_func:
+                previous.append(int(char))
+                continue
+            last = previous.pop()
+            previous[-1] = calcul_func[char](previous[-1], last)
+        return previous[-1]
+
+    def get_sign(self, x, y):
+        sign = x * y > 0
+        if sign:
+            return 1
+        return -1
