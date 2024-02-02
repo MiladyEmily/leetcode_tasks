@@ -74,3 +74,20 @@ class Solution1291(object):
                 return start_digit - 1, 0
             break
         return start_digit, 0
+
+
+#2966. Divide Array Into Arrays With Max Difference
+class Solution2966:
+    def divideArray(self, nums, k):
+        SIZE = 3
+        nums.sort()
+        len_arr = len(nums)
+        result_array = [0]*(len_arr // SIZE)
+        i = 0
+        while i < len_arr:
+            if nums[i+2] - nums[i] > k:
+                return []
+            result_array[i // 3] = nums[i:i+3]
+            i += 3
+        return result_array
+  
